@@ -1,60 +1,128 @@
-# Notion KEX
+<p align="center">
+  <img src="assets/margins.gif" alt="A Notion page in a narrow window: the wide empty side margins shrink to a slim, even gutter and the text fills the pane" width="100%" />
+</p>
 
-Responsive page margins, a gliding and blinking typing caret, and browser-style touchpad pinch zoom inside the official Windows Notion desktop app.
+<h1 align="center">Notion KEX</h1>
 
-## Install on another computer
+<p align="center">
+  <em>The Notion desktop app with room to work, a smooth caret and touchpad pinch zoom.</em>
+</p>
 
-1. Install and run the official Notion desktop app once, then **Quit** it from the tray menu.
-2. Extract `Notion-KEX-1.1.2.zip` to an ordinary folder and run `Install.cmd`.
-3. Focus the Notion desktop window and **press and release Alt** to open its application menu. Choose **Debug → Extensions Enabled** once, then Quit and reopen Notion.
-4. Open **View → Extensions → Notion KEX** to change the margins, caret motion, touchpad zoom, or disable the patch.
+<p align="center">
+  <a href="https://github.com/SirBarnaby/notion-kex/releases/latest"><img src="https://img.shields.io/github/v/release/SirBarnaby/notion-kex?label=download&style=flat&color=24292f" alt="Download the latest release" /></a>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-24292f?style=flat" alt="Windows 10 and 11" />
+  &nbsp;
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-24292f?style=flat" alt="MIT licence" /></a>
+</p>
 
-The installer uses PowerShell included with Windows. Node.js, a debugger, administrator rights, and another browser are not needed to use the patch. A custom installation can be selected with `tools/Setup.ps1 -NotionExe <path> -NotionData <profile folder>`.
+Notion KEX makes the official Notion desktop app for Windows better at the window sizes you actually use. Pages stop wasting half the screen on empty margins, the caret glides instead of jumping, and two fingers on the touchpad zoom like in a browser. It lives inside the real Notion app, with its own page in Notion's menus, and every feature can be switched off.
 
-The application menu is separate from a page's three-dot menu and the workspace menu. If **Debug** is missing, fully Quit Notion from its tray icon and run `Install.cmd` again before reopening it. The installer enables the ordinary Debug-menu preference while Notion is closed; the extension permission still needs your click inside Notion.
+<p align="center"><sub><a href="#features">Features</a> · <a href="#see-it-in-action">See it in action</a> · <a href="#install">Install</a> · <a href="CHANGELOG.md">Patch notes</a> · <a href="#faq">FAQ</a> · <a href="#licence">Licence</a></sub></p>
 
-To update an existing KEX installation, Quit Notion and run the new package's `Install.cmd`. An already enabled native extension permission does not need to be enabled again.
+## Features
 
-## How it survives updates
+- **Room to work**: in narrow and half-screen windows, pages use a slim, even margin on both sides instead of a narrow column in the middle. Wide windows keep Notion's own layout.
+- **Adjustable margins**: pick the margin and the window width where compact margins start.
+- **Columns that fit**: two, three and five column layouts use the same compact width. Column ratios and nested columns stay as you made them.
+- **Full-width blocks**: tabs, headings, lists, quotes, callouts and code blocks fill the page. Covers, images and side panels keep their native sizes.
+- **Smooth caret**: the caret glides to where you type or click, then blinks like the native one. Selecting, dragging and IME typing use Notion's own caret.
+- **Touchpad pinch zoom**: pinch with two fingers to zoom around the pointer, from 100% to 500%. Pinch back or press <kbd>Ctrl</kbd>+<kbd>0</kbd> to reset. <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>−</kbd> still work.
+- **No edge-hover sidebar**: the floating sidebar no longer pops out when the pointer touches the window edge. <kbd>Ctrl</kbd>+<kbd>\\</kbd> and the sidebar button still open it.
+- **Settings inside Notion**: *View* > *Extensions* > *Notion KEX*, with a switch for each feature and one to turn KEX off.
+- **Survives Notion updates**: the Notion KEX launcher checks itself every time Notion starts and repairs pinch zoom after an app update, the next time Notion fully closes. It never closes Notion for you.
+- **Your shortcuts keep working**: the taskbar pin, Start menu and desktop shortcuts keep Notion's icon and taskbar group.
+- **One file, no installer**: `Notion KEX.exe` is the installer, the launcher and the uninstaller. No admin rights, PowerShell, Node.js or browser needed.
+- **Private by design**: KEX never changes your text, never intercepts typing and makes no network requests. Settings stay on your computer.
 
-First installation on a new Windows computer needs the native permission step above; it is not fully one click. Once that permission is enabled, later KEX updates use `Install.cmd`. The portable package contains no accounts or computer-specific settings.
+## See it in action
 
-The margins and caret live in an unpacked extension in `%APPDATA%\Notion\extensions\Notion KEX`, loaded by Notion's existing extension system. These files and settings remain in the user profile when the application directory is replaced.
+### Room to work
 
-Touchpad zoom also needs a small native integration. The installer appends KEX's two zoom scripts to the existing page preload and main entry inside `resources\app.asar`, preserving the original code and every other member. It verifies a backup before replacing the archive and records hashes for safe restoration. Notion.exe, application fuses, the updater and secure settings are not changed. Builds enforcing embedded archive integrity are refused.
+<p align="center"><img src="assets/margins.gif" alt="A narrow Notion window: wide margins collapse into a slim even gutter, and the page text reflows to fill it" /></p>
 
-**After a Notion application update, Quit Notion and rerun `Install.cmd` to restore native pinch zoom.** `Status.cmd` detects a replaced archive. The installer checks the new app's contracts before changing it; it never restores an older Notion version over an update.
+### Smooth caret
 
-The native extension permission is a separate Notion setting. Enable it on each computer through Notion's own Debug menu; encrypted permission files and account profiles must never be copied between computers. The installer does not alter secure settings.
+<p align="center"><img src="assets/smooth-caret.gif" alt="Typing and clicking around a Notion page while the caret glides between positions" /></p>
 
-This is resilient to replacement of the application files, not a promise that every future Notion redesign is compatible. The installer checks for the native loader contract. The layout adapter checks for Notion's named grid before applying changes. If the grid disappears or the caret cannot be measured, Notion keeps its native layout or caret. The sidebar adapter recognizes the current native zero-width navigation container; an unknown width contract keeps native rendering. Notion's cloud-delivered editor can change independently of desktop updates.
+### Touchpad pinch zoom
 
-## Behavior
+<p align="center"><img src="assets/pinch-zoom.gif" alt="Two-finger pinch zooming into a table on a Notion page around the pointer, then pinching back to 100%" /></p>
 
-- Page panes narrower than 1100 px use a requested margin of 24 px, or 20 px in especially narrow panes. Wide panes retain Notion's own layout. The requested margin and breakpoint are adjustable.
-- Both page margins stay compact, including beside the sidebar. There is no added drag gutter. While KEX is enabled, the floating sidebar preview stays hidden on edge hover. Open the native sidebar with its button or **Ctrl + \**; its controls and normal opening animation remain native. Turning KEX off restores native hover behavior.
-- Full-bleed covers and named grid lines are retained. The expanded right margin used for a native side panel is preserved.
-- Two, three, and larger column groups use the same compact content width. Column ratios, divider spacing, and nested column layouts remain native; wide panes retain Notion's original width caps.
-- Tabs, paragraphs, headings, lists, quotes, callouts and code containers fill the available content width on both sides. Their internal padding remains native. Explicit image/video sizes are retained.
-- Caret motion is limited to ordinary collapsed text selections. The gliding caret is painted as part of the selected editable element, clipped by its own bounds. It has no separate page-level element or viewport position. The browser carries this paint when the text moves or scrolls and stops painting it when the owner is removed. Cloning a block does not copy its animation effects. Neither text nor editable DOM attributes are modified.
-- Restored selections and moved blocks use native rendering until a fresh click, keystroke or text input resumes editing. Style/theme changes also end the old session. This avoids reviving stale selections after a move. An intentionally hidden native caret is never replaced by visible custom paint.
-- Native caret suppression is verified before custom paint appears. Highlighted descendants, existing background images, competing background animations, rotations, skew, reflection and unsupported geometry use the native caret so application styling stays intact. Translation, ordinary positive scaling, zoom, wrapping and RTL text are supported. Idle checks do not restart blinking or rebuild animations.
-- The idle caret alternates visible and hidden phases. Replacing unchanged editor text does not restart its idle delay; actual editing activity supplies the blink clock.
-- Pointer selection, block dragging, IME composition, reduced motion, high contrast, blur, and unsupported geometry use the native caret.
-- Pinch with two fingers to zoom smoothly around the pointer from 100% to 500%, using Chromium's own visual viewport. Pinch inward to return to 100%, or press **Ctrl + 0**. Existing Ctrl + / − layout zoom remains available. The Touchpad pinch zoom setting and master switch disable pinch and return the visual viewport to 100%.
-- Pinch support is stored in the native view's preferences. Chromium preference refreshes retain it after startup; no initial settings toggle is needed.
-- The patch does not change text, intercept typing, replace the editor, or make network requests. Settings are local to each computer.
+### Settings
 
-## Verify and remove
+<p align="center"><img src="assets/settings.png" alt="The Notion KEX settings page: page layout, typing and zoom sections with switches and sliders" width="420" /></p>
 
-`Status.cmd` checks installed extension files and the native archive record. In Notion's extension menu, KEX must be loaded rather than listed as disabled. Runtime markers include `data-notion-kex-version`, `data-notion-kex-layout`, `data-notion-kex-caret` and `data-notion-kex-pinch`; these contain no page text.
+## Install
 
-Quit Notion and run `Uninstall.cmd` to remove KEX. It restores the exact backed-up archive when the installed archive still matches KEX's recorded hash, and retains a newer unpatched app after an update. An unexpectedly edited archive containing KEX code is retained with its record and backup for manual recovery. Settings changed by the installer are restored when they still have the installed value. Backups stay under `%APPDATA%\Notion\Notion KEX`; they belong to that computer and are not part of the portable package.
+Requires the official Notion desktop app on 64-bit Windows 10 or 11.
 
-## Development
+1. Download `Notion KEX.exe` from the [latest release](https://github.com/SirBarnaby/notion-kex/releases/latest).
+2. Quit Notion completely: right-click its icon in the notification area and choose **Quit**.
+3. Run `Notion KEX.exe` and choose **OK**. Notion opens when it's done.
+4. One time only, turn on Notion's extension permission: click into the Notion window, press and release <kbd>Alt</kbd>, then choose **Debug** > **Extensions Enabled**. Quit Notion from the tray and open it again.
 
-`npm test` runs policy and native payload checks. `npm run test:browser`, `test:columns`, `test:gutters` and `test:interactions` run isolated headless browser checks. `npm run test:native-zoom` uses a workspace copy of the installed Electron runtime with a generated app and isolated profile; it never loads the signed-in Notion app. `test/installer.ps1` and `test/native-installer.ps1` exercise generated archives and interruption recovery. Run native-runtime and installer fixtures sequentially because process-close checks deliberately reject unidentified Notion processes.
+That's it. Open *View* > *Extensions* > *Notion KEX* to change the settings.
 
-`npm run build` generates checksums and the portable ZIP. Browser and live-app evidence belongs under `test-results/` and `recon/`; these folders, user profiles, credentials, captured pages, and Notion binaries are excluded from the ZIP.
+> [!NOTE]
+> The file isn't code-signed, so Windows SmartScreen may say it's from an unknown publisher. Choose *More info* > *Run anyway*. The *Debug* menu is Notion's own application menu, not a page or workspace menu.
 
-The current native integration was checked against Notion **7.41.0**, Electron **44.9.1**, Chromium **152.0.7977.167** on this PC. Physical touchpad input and the signed-in editor still need a user check after installation. See `docs/research.md` and `docs/verification.md` for evidence and limits.
+### Update
+
+Download the new `Notion KEX.exe` and run it. Your settings are kept.
+
+### Uninstall
+
+Quit Notion, open a terminal and run:
+
+```bash
+"%LOCALAPPDATA%\NotionKEX\Notion KEX.exe" uninstall
+```
+
+It puts Notion's original app files and shortcuts back and removes KEX. Your notes, other extensions and Notion settings are untouched.
+
+## FAQ
+
+<details>
+<summary><b>Will this get my Notion account in trouble?</b></summary>
+
+KEX doesn't talk to Notion's servers, change what gets synced or automate anything. It only changes how the desktop app draws pages on your computer.
+</details>
+
+<details>
+<summary><b>What happens when Notion updates itself?</b></summary>
+
+Margins, the caret and settings keep working straight away. Pinch zoom returns the next time Notion fully closes: KEX waits for Notion and its updater to finish, then repairs it. You can also just run `Notion KEX.exe` again.
+</details>
+
+<details>
+<summary><b>Does it change Notion.exe?</b></summary>
+
+No. Notion.exe, its update system and its secure settings are never touched. Pinch zoom adds two small scripts to Notion's own app archive, after checking that the archive is one KEX understands. The original is backed up first and restored on uninstall. Builds of Notion that lock their app archive are refused rather than worked around.
+</details>
+
+<details>
+<summary><b>Why does it need the Debug menu step?</b></summary>
+
+Extensions in the Notion desktop app need Notion's own permission switch, and that switch is stored encrypted on each computer. KEX turns on the menu, but the click has to be yours.
+</details>
+
+<details>
+<summary><b>Does it work in the browser or on macOS?</b></summary>
+
+No. Notion KEX is for the Windows desktop app only.
+</details>
+
+<details>
+<summary><b>Something looks wrong. How do I check?</b></summary>
+
+Run `"%LOCALAPPDATA%\NotionKEX\Notion KEX.exe" status` in a terminal. If Notion redesigns something KEX doesn't recognise, KEX steps aside and Notion keeps its native look until KEX is updated. Please [open an issue](https://github.com/SirBarnaby/notion-kex/issues) with what you see.
+</details>
+
+## Building from source
+
+See [`native-host/README.md`](native-host/README.md) for the launcher and its 83-case test suite, and [`docs/technical.md`](docs/technical.md) for how the extension and the pinch zoom patch work.
+
+## Licence
+
+[MIT](LICENSE). Notion KEX is not affiliated with or endorsed by Notion Labs, Inc. Notion is a trademark of Notion Labs, Inc.
