@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Notion KEX",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Compact Notion margins, a gliding blinking caret and native touchpad pinch zoom.",
   "permissions": ["storage"],
   "action": { "default_title": "Notion KEX", "default_popup": "settings.html" },

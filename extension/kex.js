@@ -2,7 +2,7 @@
   'use strict';
   const policy = globalThis.NotionKexPolicy;
   const api = globalThis.chrome;
-  const version = '1.1.2';
+  const version = '1.2.0';
   let settings = policy.normalize();
   let disposed = false;
   let scanFrame = 0;

@@ -2185,7 +2185,7 @@ void AddExtensionCases(std::vector<TestCase>& cases) {
                      return [&fixture, stateBefore, asarBefore,
                              outcome](CaseResult& result) {
                        result.Check(outcome.changed, "install changed");
-                       result.Contains(outcome.message, "1.1.2 installed in",
+                       result.Contains(outcome.message, "1.2.0 installed in",
                                        "install message");
                        result.Contains(outcome.message,
                                        "installed with a verified",
@@ -2220,7 +2220,7 @@ void AddExtensionCases(std::vector<TestCase>& cases) {
                        const nlohmann::ordered_json record =
                            ReadJsonFile(fixture.InstallRecord());
                        result.Equal(record["version"].get<std::string>(),
-                                    "1.1.2", "record version");
+                                    "1.2.0", "record version");
                        result.Check(record.contains("installedAt"),
                                     "record installedAt");
                        result.Check(record.contains("stateBackup"),
@@ -2292,7 +2292,7 @@ void AddExtensionCases(std::vector<TestCase>& cases) {
                                     status.problems.empty()
                                         ? ""
                                         : status.problems.front());
-                       result.Equal(status.version, "1.1.2",
+                       result.Equal(status.version, "1.2.0",
                                     "status version");
                        result.Check(status.nativeInstalled,
                                     "status native installed");
@@ -3370,7 +3370,7 @@ void AddCliCases(std::vector<TestCase>& cases) {
                              after](CaseResult& result) {
                        result.Equal(std::to_string(install.exitCode), "0",
                                     "install exit code");
-                       result.Contains(install.text, "1.1.2 installed in",
+                       result.Contains(install.text, "1.2.0 installed in",
                                        "install output");
                        result.Check(launcherCopied, "launcher copied");
                        result.Check(shortcutsSkipped, "shortcuts skipped");

@@ -461,8 +461,8 @@ rather than crashing evidence collection.
   This is a safety property, not a bug.
 - `kex-status.exe` remains available as the original passive status slice; the
   production entry point is `Notion KEX.exe`.
-- The native host project version is `1.0.0`; the embedded extension package
-  version is read from `extension/manifest.json` (currently `1.1.2`).
+- The native host project version is `1.2.0`; the embedded extension package
+  version is read from `extension/manifest.json` (currently `1.2.0`).
 
 ## Dependency pinning
 

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(
   notion_kex_native_host
-  VERSION 1.0.0
+  VERSION 1.2.0
   DESCRIPTION "Native Notion KEX host for Windows"
   LANGUAGES CXX)
 

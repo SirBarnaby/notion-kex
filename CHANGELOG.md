@@ -2,7 +2,7 @@
 
 Notion KEX adds to the official Notion desktop app for Windows. Run the newest `Notion KEX.exe` to update; your settings are kept.
 
-## November 2026
+## 1.2.0 · November 2026
 
 ### New
 
@@ -16,7 +16,7 @@ Notion KEX adds to the official Notion desktop app for Windows. Run the newest `
 - Checked against **Notion 7.42.3**.
 - Uninstalling after an upgrade from the older zip package now leaves your Start menu shortcut opening Notion, instead of pointing at a removed script.
 
-## October 2026
+## 1.0 – 1.1 · October 2026
 
 ### New
 

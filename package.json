@@ -1,6 +1,6 @@
 {
   "name": "notion-kex",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "Portable Notion desktop extension for responsive page gutters and a smooth caret.",
