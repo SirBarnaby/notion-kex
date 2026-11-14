@@ -3310,6 +3310,24 @@ void AddCliCases(std::vector<TestCase>& cases) {
                      };
                    }});
 
+  // The startup shortcut runs --signin-check and the asar payload runs
+  // --watch; a parse failure there would show an error box at every sign-in.
+  cases.push_back({"cli-hidden-mode-flags", true, [](Fixture& fixture) {
+                     return [&fixture](CaseResult& result) {
+                       for (const wchar_t* flag :
+                            {L"--signin-check", L"--watch"}) {
+                         const ProcessOutput output = RunCli(fixture, flag);
+                         const std::string name =
+                             notion_kex::detail::ToUtf8(std::wstring(flag));
+                         result.Equal(std::to_string(output.exitCode), "0",
+                                      name + " exit code");
+                         result.Contains(output.text,
+                                         "Notion KEX is not installed",
+                                         name + " message");
+                       }
+                     };
+                   }});
+
   cases.push_back({"cli-status-not-installed", true, [](Fixture& fixture) {
                      return [&fixture](CaseResult& result) {
                        const ProcessOutput output =

@@ -223,6 +223,18 @@ bool ParseArguments(int argc, wchar_t** argv, Options& options,
       modeSeen = true;
       continue;
     }
+    // The startup shortcut and the main-process payload inside app.asar start
+    // the hidden modes with a flag spelling, so both spellings must parse.
+    if (argument == L"--watch" || argument == L"--signin-check") {
+      if (modeSeen) {
+        error = "Unexpected argument: " + LowerAscii(argument);
+        return false;
+      }
+      options.mode = LowerAscii(argument.substr(2));
+      options.modeExplicit = true;
+      modeSeen = true;
+      continue;
+    }
     if (!argument.empty() && argument.front() == L'-') {
       error = "Unknown option: " + LowerAscii(argument);
       return false;
