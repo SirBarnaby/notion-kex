@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/margins.gif" alt="A Notion page in a narrow window: the wide empty side margins shrink to a slim, even gutter and the text fills the pane" width="100%" />
-</p>
-
 <h1 align="center">Notion KEX</h1>
 
 <p align="center">
@@ -18,7 +14,7 @@
 
 Notion KEX makes the official Notion desktop app for Windows better at the window sizes you actually use. Pages stop wasting half the screen on empty margins, the caret glides instead of jumping, and two fingers on the touchpad zoom like in a browser. It lives inside the real Notion app, with its own page in Notion's menus, and every feature can be switched off.
 
-<p align="center"><sub><a href="#features">Features</a> · <a href="#see-it-in-action">See it in action</a> · <a href="#install">Install</a> · <a href="CHANGELOG.md">Patch notes</a> · <a href="#faq">FAQ</a> · <a href="#licence">Licence</a></sub></p>
+<p align="center"><sub><a href="#features">Features</a> · <a href="#settings">Settings</a> · <a href="#install">Install</a> · <a href="CHANGELOG.md">Patch notes</a> · <a href="#faq">FAQ</a> · <a href="#licence">Licence</a></sub></p>
 
 ## Features
 
@@ -35,21 +31,9 @@ Notion KEX makes the official Notion desktop app for Windows better at the windo
 - **One file, no installer**: `Notion KEX.exe` is the installer, the launcher and the uninstaller. No admin rights, PowerShell, Node.js or browser needed.
 - **Private by design**: KEX never changes your text, never intercepts typing and makes no network requests. Settings stay on your computer.
 
-## See it in action
+## Settings
 
-### Room to work
-
-<p align="center"><img src="assets/margins.gif" alt="A narrow Notion window: wide margins collapse into a slim even gutter, and the page text reflows to fill it" /></p>
-
-### Smooth caret
-
-<p align="center"><img src="assets/smooth-caret.gif" alt="Typing and clicking around a Notion page while the caret glides between positions" /></p>
-
-### Touchpad pinch zoom
-
-<p align="center"><img src="assets/pinch-zoom.gif" alt="Two-finger pinch zooming into a table on a Notion page around the pointer, then pinching back to 100%" /></p>
-
-### Settings
+Everything is in Notion's own menus: press <kbd>Alt</kbd> in the Notion window, then *View* > *Extensions* > *Notion KEX*.
 
 <p align="center"><img src="assets/settings.png" alt="The Notion KEX settings page: page layout, typing and zoom sections with switches and sliders" width="420" /></p>
 
