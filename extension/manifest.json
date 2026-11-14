@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Notion KEX",
+  "version": "1.1.2",
+  "description": "Compact Notion margins, a gliding blinking caret and native touchpad pinch zoom.",
+  "permissions": ["storage"],
+  "action": { "default_title": "Notion KEX", "default_popup": "settings.html" },
+  "content_scripts": [{
+    "matches": ["https://app.notion.com/*", "https://www.notion.so/*", "https://notion.so/*"],
+    "run_at": "document_start",
+    "css": ["kex.css"],
+    "js": ["policy.js", "kex.js"]
+  }]
+}

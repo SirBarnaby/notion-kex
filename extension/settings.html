@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Notion KEX</title><link rel="stylesheet" href="settings.css"></head>
+<body><main>
+  <header><span class="badge" aria-hidden="true">K</span><div><h1>Notion KEX</h1><p>Make room for your work.</p></div></header>
+  <label class="toggle master"><span>Enable Notion KEX</span><input type="checkbox" id="enabled"></label>
+  <section><h2>Page layout</h2>
+    <label class="toggle"><span>Comfortable margins in narrow windows<small>Equal compact margins on both sides of each page pane.</small></span><input type="checkbox" id="responsive"></label>
+    <label class="slider" for="gutter">Page margin <output id="gutter-value"></output><input type="range" id="gutter" min="16" max="64" step="2"></label>
+    <label class="slider" for="narrowAt">Compact below <output id="narrowAt-value"></output><input type="range" id="narrowAt" min="640" max="1600" step="20"></label>
+  </section>
+  <section><h2>Typing</h2>
+    <label class="toggle"><span>Smooth caret<small>Uses the native caret while selecting, dragging or composing, and when smooth rendering is unavailable.</small></span><input type="checkbox" id="smoothCaret"></label>
+    <label class="slider" for="caretDuration">Movement <output id="caretDuration-value"></output><input type="range" id="caretDuration" min="40" max="180" step="10"></label>
+  </section>
+  <section><h2>Zoom</h2>
+    <label class="toggle"><span>Touchpad pinch zoom<small>Zoom around the pointer, like in your browser. Ctrl + 0 resets the view.</small></span><input type="checkbox" id="touchpadZoom"></label>
+  </section>
+  <footer><span id="status" role="status">Loading settings…</span><button type="button" id="reset">Reset defaults</button></footer>
+  <p class="note">Open the sidebar with its button or Ctrl + &#92;. Edge hover stays off while KEX is enabled. Settings stay on this computer.</p>
+</main><script src="policy.js"></script><script src="settings.js"></script></body></html>

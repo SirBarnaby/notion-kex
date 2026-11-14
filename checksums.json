@@ -1,0 +1,14 @@
+{
+  "extension/kex.css": "9be5c0954e1aad5829b80f3d594da2fd8fc20668d388e807cb34f70eb8734dad",
+  "extension/kex.js": "aa047a98d930e2057848483906281b9ba03a1a62e17cc36fc34795b83a9cedc7",
+  "extension/manifest.json": "67846cd66a476a36275cbcf4601b2bd1e6e88af77daeeb9c50c6a625b84827cf",
+  "extension/policy.js": "8a692df0de5e9513d5bd5a5015c3697b749c82da40b08c9153989f9b8fb149da",
+  "extension/settings.css": "fc5e6b58265204667d6f1dc9c7bd827537a2d72748cb784b6bc88ee5d95c4e12",
+  "extension/settings.html": "2aab3dd1f1faa60acfdbcbf3448206ecf784d79046b55bbc5fed35e830f42e0e",
+  "extension/settings.js": "19e171f5706c8eaf9454476d8488d74f83de5cbced05236d155da4158d90d8f6",
+  "native/pinch.js": "fcd7f8c91507d3861ef52f4faaedb4db3c5106ceb141eb68b7675b77c19d8ae9",
+  "native/pinch-main.js": "45767cbea87ccda051f67c0279279d8a623e8df94534ebb126f9e437c3dd4ad5",
+  "tools/Asar.ps1": "6db04c1dc156575831807ac4eaf8947b6227bc424d39e824d1486ec866547470",
+  "tools/NativeZoom.ps1": "bd731391d7aecc5a652b14c5ab3820b4e46ac5cf5c9a5ccc30f22744a14a1c20",
+  "tools/Setup.ps1": "29635e8895fd767cf1b36ff8a5d3e78f3dffc62495be1b805b00690442909b83"
+}

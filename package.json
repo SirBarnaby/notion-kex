@@ -1,0 +1,17 @@
+{
+  "name": "notion-kex",
+  "version": "1.1.2",
+  "private": true,
+  "type": "module",
+  "description": "Portable Notion desktop extension for responsive page gutters and a smooth caret.",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "build": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/Build.ps1",
+    "test:browser": "node test/browser.mjs",
+    "test:columns": "node test/columns.mjs",
+    "test:gutters": "node test/gutters.mjs",
+    "test:interactions": "node test/interactions.mjs",
+    "test:native-zoom": "node test/native-zoom.mjs"
+  },
+  "devDependencies": { "playwright": "1.56.1" }
+}

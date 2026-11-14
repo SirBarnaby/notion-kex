@@ -1,0 +1,28 @@
+/* A zero-width native nav hosts the floating preview, including Electron-initiated peeks.
+   Expanded navigation keeps its native rendering, controls and animation. */
+nav.notion-sidebar-container[data-notion-kex-sidebar-collapsed="true"],
+nav.notion-sidebar-container[data-notion-kex-sidebar-collapsed="true"] * {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+/* Keep Notion's named grid lines, full-bleed covers, editor and database layout. */
+/* The editable tree sanitizes extra attributes/classes. Keep KEX state on its outer frame. */
+@scope (.notion-frame[data-notion-kex-compact="true"]) to (.notion-frame) {
+  .layout {
+    --margin-width: var(--notion-kex-gutter, 24px) !important;
+    --content-width: minmax(0, 1fr) !important;
+    --margin-left-width: var(--notion-kex-gutter, 24px) !important;
+  }
+  .layout:not(.layout-wide-right-margin-expanded) {
+    --margin-right-width: var(--notion-kex-gutter, 24px) !important;
+  }
+  /* Fluid blocks retain Notion's old pixel cap after the grid expands. */
+  :is(
+    .notion-text-block,
+    .notion-header-block, .notion-sub_header-block, .notion-sub_sub_header-block, .notion-header_4-block,
+    .notion-bulleted_list-block, .notion-numbered_list-block, .notion-to_do-block,
+    .notion-toggle-block, .notion-quote-block, .notion-callout-block, .notion-code-block,
+    .notion-tab-block, .notion-column_list-block, .notion-divider-block, .notion-table_of_contents-block,
+    .notion-transclusion_container-block, .notion-transclusion_reference-block
+  ) { max-width: 100% !important; }
+}

@@ -1,0 +1,8 @@
+node_modules/
+.scratch/
+dist/
+recon/out/
+recon/static/
+recon/*.json
+test-results/
+native-host/build/
