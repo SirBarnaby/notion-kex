@@ -7,6 +7,7 @@
 
 #include "file_util.hpp"
 #include "path_util.hpp"
+#include "process.hpp"
 
 #include <windows.h>
 #include <nlohmann/json.hpp>
@@ -31,6 +32,7 @@ namespace fs = std::filesystem;
 
 struct Options {
   std::string mode = "launch";
+  bool modeExplicit = false;
   fs::path notionExe;
   fs::path notionData;
   fs::path launcherRoot;
@@ -230,6 +232,7 @@ bool ParseArguments(int argc, wchar_t** argv, Options& options,
       return false;
     }
     options.mode = LowerAscii(argument);
+    options.modeExplicit = true;
     modeSeen = true;
   }
   return true;
@@ -519,6 +522,70 @@ CommandResult SignInCommand(const Options& options) {
                        outcome.exitCode != 0};
 }
 
+fs::path RunningModulePath() {
+  std::vector<wchar_t> buffer(32768);
+  const DWORD size = GetModuleFileNameW(nullptr, buffer.data(),
+                                        static_cast<DWORD>(buffer.size()));
+  if (size == 0 || size >= buffer.size()) {
+    return {};
+  }
+  return fs::path(std::wstring(buffer.data(), size));
+}
+
+// A double-click on a downloaded copy, outside the installed launcher folder,
+// is a request to set up or update Notion KEX. The installed launcher, every
+// shortcut and every explicit mode keep their existing meaning.
+bool IsSetupDoubleClick(const Options& options) {
+  if (options.modeExplicit || options.json || options.quiet) {
+    return false;
+  }
+  const fs::path module = RunningModulePath();
+  return !module.empty() &&
+         !notion_kex::detail::IsUnderDirectory(module, options.launcherRoot);
+}
+
+int Ask(std::string_view text, UINT buttons) {
+  return MessageBoxW(nullptr, Widen(text).c_str(), L"Notion KEX",
+                     buttons | MB_SETFOREGROUND);
+}
+
+// Returns false when the user cancels. Notion is never closed on the user's
+// behalf; the dialog waits until they quit it from the tray.
+bool WaitForNotionClosed(const Options& options) {
+  while (notion_kex::detail::IsNotionRunning(options.notionExe)) {
+    const int answer = Ask(
+        "Notion is still running.\n\nRight-click the Notion icon in the "
+        "notification area, choose Quit, then click Retry.",
+        MB_RETRYCANCEL | MB_ICONWARNING);
+    if (answer != IDRETRY) {
+      return false;
+    }
+  }
+  return true;
+}
+
+int RunSetupDoubleClick(const Options& options) {
+  const bool installed = notion_kex::detail::FileExists(
+      options.notionData / "Notion KEX" / "install.json");
+  const std::string prompt =
+      installed
+          ? "Update Notion KEX to version " KEX_VERSION "?\n\nYour settings "
+            "are kept. Notion needs to be closed while the update runs."
+          : "Install Notion KEX " KEX_VERSION " into the Notion desktop app?"
+            "\n\nIt adds comfortable page margins, a smooth caret and "
+            "touchpad pinch zoom. Notion needs to be closed while it installs."
+            " Run this file again any time to update.";
+  if (Ask(prompt, MB_OKCANCEL | MB_ICONQUESTION) != IDOK) {
+    return 0;
+  }
+  if (!WaitForNotionClosed(options)) {
+    return 0;
+  }
+  const CommandResult result = InstallCommand(options);
+  ShowMessage(result.text, result.error);
+  return result.exitCode;
+}
+
 CommandResult Dispatch(const Options& options) {
   if (options.mode == "launch") {
     return LaunchCommand(options);
@@ -588,6 +655,10 @@ int wmain(int argc, wchar_t** argv) {
   const HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
   const HANDLE errors = GetStdHandle(STD_ERROR_HANDLE);
   const bool redirected = IsWritableStream(output);
+
+  if (!console && !redirected && IsSetupDoubleClick(options)) {
+    return RunSetupDoubleClick(options);
+  }
 
   const CommandResult result = Dispatch(options);
 

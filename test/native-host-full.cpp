@@ -2848,8 +2848,8 @@ void AddShortcutCases(std::vector<TestCase>& cases) {
                      InstallShortcuts(locations);
                      const ShortcutOutcome outcome =
                          UninstallShortcuts(locations);
-                     return [&fixture, locations, outcome,
-                             powershellTarget](CaseResult& result) {
+                     return [&fixture, locations,
+                             outcome](CaseResult& result) {
                        result.EqualU64(outcome.restored, 3,
                                        "restored shortcut count");
                        const ShortcutInfo desktop = ReadTestShortcut(
@@ -2860,10 +2860,14 @@ void AddShortcutCases(std::vector<TestCase>& cases) {
                            "desktop restored");
                        const ShortcutInfo old = ReadTestShortcut(
                            locations.startMenu / "Old Notion.lnk");
+                       // The PowerShell wrapper's script is removed with the
+                       // launcher folder, so its shortcut opens Notion itself.
                        result.Check(
                            notion_kex::detail::EqualsPath(
-                               fs::path(old.target), powershellTarget),
-                           "old wrapper restored");
+                               fs::path(old.target), fixture.notionExe),
+                           "old wrapper restored to Notion");
+                       result.Check(old.arguments.empty(),
+                                    "old wrapper arguments cleared");
                        const ShortcutInfo pinned = ReadTestShortcut(
                            locations.taskbar / "Notion Pinned.lnk");
                        result.Check(

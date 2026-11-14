@@ -379,6 +379,26 @@ void CreateShortcut(const fs::path& path, const fs::path& target,
   link.Save(path);
 }
 
+// Shortcuts made by the PowerShell installer start NotionKEX\tools\Launch.ps1.
+// That script lives in the launcher folder that uninstall removes, so a
+// restored wrapper is pointed straight at Notion.exe instead of left broken.
+void RetargetLegacyWrapper(const fs::path& path,
+                           const ShortcutLocations& locations) {
+  try {
+    ShellLink link;
+    link.Load(path);
+    if (!ContainsIgnoreCase(link.Arguments(),
+                            L"NotionKEX\\tools\\Launch.ps1")) {
+      return;
+    }
+    link.PointTo(locations.notionExe, L"", locations.notionExe.parent_path(),
+                 locations.notionExe, L"Notion");
+    link.Save(path);
+  } catch (const std::exception&) {
+    // The restored original stays as it was.
+  }
+}
+
 }  // namespace
 
 ShortcutLocations DefaultShortcutLocations(const fs::path& notionExe,
@@ -526,6 +546,7 @@ ShortcutOutcome UninstallShortcuts(const ShortcutLocations& locations) {
       }
       if (restore) {
         detail::CopyFileTo(backup, path);
+        RetargetLegacyWrapper(path, locations);
         ++outcome.restored;
       }
       detail::RemoveFile(backup);
