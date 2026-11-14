@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/margins.gif" alt="A narrow Notion window switching between Notion's wide margins, where a sentence wraps onto two lines, and Notion KEX's slim margins, where it fits on one" width="100%" />
+</p>
+
 <h1 align="center">Notion KEX</h1>
 
 <p align="center">
@@ -14,7 +18,7 @@
 
 Notion KEX makes the official Notion desktop app for Windows better at the window sizes you actually use. Pages stop wasting half the screen on empty margins, the caret glides instead of jumping, and two fingers on the touchpad zoom like in a browser. It lives inside the real Notion app, with its own page in Notion's menus, and every feature can be switched off.
 
-<p align="center"><sub><a href="#features">Features</a> · <a href="#settings">Settings</a> · <a href="#install">Install</a> · <a href="CHANGELOG.md">Patch notes</a> · <a href="#faq">FAQ</a> · <a href="#licence">Licence</a></sub></p>
+<p align="center"><sub><a href="#features">Features</a> · <a href="#see-it-in-action">See it in action</a> · <a href="#install">Install</a> · <a href="CHANGELOG.md">Patch notes</a> · <a href="#faq">FAQ</a> · <a href="#licence">Licence</a></sub></p>
 
 ## Features
 
@@ -30,6 +34,18 @@ Notion KEX makes the official Notion desktop app for Windows better at the windo
 - **Your shortcuts keep working**: the taskbar pin, Start menu and desktop shortcuts keep Notion's icon and taskbar group.
 - **One file, no installer**: `Notion KEX.exe` is the installer, the launcher and the uninstaller. No admin rights, PowerShell, Node.js or browser needed.
 - **Private by design**: KEX never changes your text, never intercepts typing and makes no network requests. Settings stay on your computer.
+
+## See it in action
+
+### Room to work
+
+Notion's own margins in a half-screen window, then Notion KEX, twice.
+
+<p align="center"><img src="assets/margins.gif" alt="The page text jumps between a narrow centered column with wide margins and a full-width layout with slim, even margins" /></p>
+
+### Smooth caret
+
+<p align="center"><img src="assets/smooth-caret.gif" alt="A sentence being typed on a Notion page while the caret glides smoothly behind the letters" /></p>
 
 ## Settings
 
